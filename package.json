@@ -24,8 +24,6 @@
     "multer": "^2.0.2",
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.12",
-    "resend": "^6.9.1",
-    "nodemailer": "^7.0.12",
-    "resend": "^6.9.2"
+    "resend": "^6.9.1"
   }
 }
