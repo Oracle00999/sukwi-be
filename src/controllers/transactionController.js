@@ -52,9 +52,10 @@ const confirmDeposit = async (req, res, next) => {
     wallet.updateBalance(transaction.cryptocurrency, transaction.amount);
     await wallet.save();
 
-<<<<<<< HEAD
-=======
-    // Notify admins about confirmed deposit
+    // Mark transaction as completed
+    transaction.markAsCompleted(adminId);
+    await transaction.save();
+
     try {
       await notifyAdmins("depositConfirmed", {
         user: transaction.user,
@@ -63,11 +64,6 @@ const confirmDeposit = async (req, res, next) => {
     } catch (emailError) {
       console.error("Failed to send deposit confirmation email:", emailError);
     }
-
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
-    // Mark transaction as completed
-    transaction.markAsCompleted(adminId);
-    await transaction.save();
 
     successResponse(
       res,
@@ -204,9 +200,6 @@ const approveWithdrawal = async (req, res, next) => {
     transaction.markAsCompleted(adminId);
     await transaction.save();
 
-<<<<<<< HEAD
-=======
-    // Notify admins about processed withdrawal
     try {
       await notifyAdmins("withdrawalProcessed", {
         user: transaction.user,
@@ -216,7 +209,6 @@ const approveWithdrawal = async (req, res, next) => {
       console.error("Failed to send withdrawal processed email:", emailError);
     }
 
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
     successResponse(
       res,
       {

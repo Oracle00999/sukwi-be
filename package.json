@@ -22,13 +22,10 @@
     "mongoose": "^9.1.0",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
-<<<<<<< HEAD
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.12",
-    "resend": "^6.9.1"
-=======
+    "resend": "^6.9.1",
     "nodemailer": "^7.0.12",
     "resend": "^6.9.2"
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
   }
 }

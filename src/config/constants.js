@@ -23,11 +23,8 @@ module.exports = {
     DEPOSIT: "deposit",
     WITHDRAWAL: "withdrawal",
     SWAP: "swap",
-<<<<<<< HEAD
     INVESTMENT: "investment",
     INVESTMENT_PAYOUT: "investment_payout",
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
   },
 
   // Transaction statuses
@@ -86,7 +83,6 @@ module.exports = {
     FAILED: "failed",
   },
 
-<<<<<<< HEAD
   // Investment statuses
   INVESTMENT_STATUS: {
     ACTIVE: "active",
@@ -95,8 +91,6 @@ module.exports = {
     CANCELLED: "cancelled",
   },
 
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
   // Response messages
   MESSAGES: {
     SUCCESS: "Operation successful",

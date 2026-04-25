@@ -1,7 +1,6 @@
 const { body } = require("express-validator");
 const { User } = require("../models");
 
-<<<<<<< HEAD
 const validCryptos = [
   "bitcoin",
   "ethereum",
@@ -14,10 +13,6 @@ const validCryptos = [
   "tron",
 ];
 
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
-// User registration validation
-// User registration validation
 const registerValidation = [
   body("email")
     .isEmail()
@@ -55,7 +50,6 @@ const registerValidation = [
     .matches(/^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/)
     .withMessage("Please provide a valid phone number"),
 
-  // Add country validation
   body("country")
     .trim()
     .notEmpty()
@@ -64,7 +58,6 @@ const registerValidation = [
     .withMessage("Country cannot exceed 100 characters"),
 ];
 
-// User login validation
 const loginValidation = [
   body("email")
     .isEmail()
@@ -74,7 +67,6 @@ const loginValidation = [
   body("password").notEmpty().withMessage("Password is required"),
 ];
 
-// Update profile validation
 const updateProfileValidation = [
   body("firstName")
     .optional()
@@ -99,7 +91,6 @@ const updateProfileValidation = [
     .withMessage("Please provide a valid phone number"),
 ];
 
-// Change password validation
 const changePasswordValidation = [
   body("currentPassword")
     .notEmpty()
@@ -126,28 +117,13 @@ const changePasswordValidation = [
     }),
 ];
 
-// Deposit/Withdrawal validation
 const transactionValidation = [
   body("amount")
     .isFloat({ min: 0.01 })
     .withMessage("Amount must be at least 0.01"),
 
   body("cryptocurrency")
-<<<<<<< HEAD
     .isIn(validCryptos)
-=======
-    .isIn([
-      "bitcoin",
-      "ethereum",
-      "tether",
-      "binance-coin",
-      "solana",
-      "ripple",
-      "stellar",
-      "dogecoin",
-      "tron",
-    ])
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
     .withMessage("Invalid cryptocurrency"),
 
   body("toAddress")
@@ -157,28 +133,13 @@ const transactionValidation = [
     .withMessage("Destination address is required for withdrawals"),
 ];
 
-// Deposit validation
 const depositValidation = [
   body("amount")
     .isFloat({ min: 0.01 })
     .withMessage("Amount must be at least 0.01"),
 
   body("cryptocurrency")
-<<<<<<< HEAD
     .isIn(validCryptos)
-=======
-    .isIn([
-      "bitcoin",
-      "ethereum",
-      "tether",
-      "binance-coin",
-      "solana",
-      "ripple",
-      "stellar",
-      "dogecoin",
-      "tron",
-    ])
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
     .withMessage("Invalid cryptocurrency"),
 
   body("txHash")
@@ -188,28 +149,13 @@ const depositValidation = [
     .withMessage("Transaction hash cannot be empty if provided"),
 ];
 
-// Withdrawal validation (address required)
 const withdrawalValidation = [
   body("amount")
     .isFloat({ min: 0.01 })
     .withMessage("Amount must be at least 0.01"),
 
   body("cryptocurrency")
-<<<<<<< HEAD
     .isIn(validCryptos)
-=======
-    .isIn([
-      "bitcoin",
-      "ethereum",
-      "tether",
-      "binance-coin",
-      "solana",
-      "ripple",
-      "stellar",
-      "dogecoin",
-      "tron",
-    ])
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
     .withMessage("Invalid cryptocurrency"),
 
   body("toAddress")
@@ -218,7 +164,6 @@ const withdrawalValidation = [
     .withMessage("Destination address is required"),
 ];
 
-// User registration validation (with phone and country required)
 const userRegisterValidation = [
   body("email")
     .isEmail()
@@ -250,7 +195,6 @@ const userRegisterValidation = [
     .isLength({ max: 50 })
     .withMessage("Last name cannot exceed 50 characters"),
 
-  // Phone required for users
   body("phone")
     .trim()
     .notEmpty()
@@ -258,7 +202,6 @@ const userRegisterValidation = [
     .matches(/^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/)
     .withMessage("Please provide a valid phone number"),
 
-  // Country required for users
   body("country")
     .trim()
     .notEmpty()
@@ -267,7 +210,6 @@ const userRegisterValidation = [
     .withMessage("Country cannot exceed 100 characters"),
 ];
 
-// Admin registration validation (phone and country optional)
 const adminRegisterValidation = [
   body("email")
     .isEmail()
@@ -299,14 +241,12 @@ const adminRegisterValidation = [
     .isLength({ max: 50 })
     .withMessage("Last name cannot exceed 50 characters"),
 
-  // Phone optional for admin
   body("phone")
     .optional()
     .trim()
     .matches(/^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/)
     .withMessage("Please provide a valid phone number"),
 
-  // Country optional for admin
   body("country")
     .optional()
     .trim()
@@ -314,7 +254,6 @@ const adminRegisterValidation = [
     .withMessage("Country cannot exceed 100 characters"),
 ];
 
-<<<<<<< HEAD
 const investmentPlanAmountValidation = body().custom((value, { req }) => {
   const minAmount = req.body.minAmount ?? req.body.min;
   const maxAmount = req.body.maxAmount ?? req.body.max;
@@ -413,8 +352,6 @@ const createInvestmentValidation = [
     .withMessage("Amount must be at least 0.01"),
 ];
 
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 module.exports = {
   registerValidation,
   loginValidation,
@@ -425,10 +362,7 @@ module.exports = {
   withdrawalValidation,
   userRegisterValidation,
   adminRegisterValidation,
-<<<<<<< HEAD
   investmentPlanValidation,
   updateInvestmentPlanValidation,
   createInvestmentValidation,
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 };

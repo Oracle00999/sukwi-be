@@ -1,7 +1,6 @@
 const { User, Wallet } = require("../models");
 const { successResponse } = require("../utils/responseHandler");
 
-<<<<<<< HEAD
 const validCryptos = [
   "bitcoin",
   "ethereum",
@@ -14,23 +13,15 @@ const validCryptos = [
   "tron",
 ];
 
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 // @desc    Fund user account
 // @route   POST /api/admin/users/:userId/fund
 // @access  Private/Admin
 const fundUserAccount = async (req, res, next) => {
   try {
     const { userId } = req.params;
-<<<<<<< HEAD
     const { cryptocurrency } = req.body;
     const amount = Number(req.body.amount);
-=======
-    const { cryptocurrency, amount } = req.body;
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
-    const adminId = req.user.id;
 
-    // Validate amount
     if (!amount || amount <= 0) {
       return res.status(400).json({
         success: false,
@@ -38,22 +29,6 @@ const fundUserAccount = async (req, res, next) => {
       });
     }
 
-<<<<<<< HEAD
-=======
-    // Validate cryptocurrency
-    const validCryptos = [
-      "bitcoin",
-      "ethereum",
-      "tether",
-      "binance-coin",
-      "solana",
-      "ripple",
-      "stellar",
-      "dogecoin",
-      "tron",
-    ];
-
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
     if (!cryptocurrency || !validCryptos.includes(cryptocurrency)) {
       return res.status(400).json({
         success: false,
@@ -61,7 +36,6 @@ const fundUserAccount = async (req, res, next) => {
       });
     }
 
-    // Find user
     const user = await User.findById(userId);
 
     if (!user) {
@@ -71,7 +45,6 @@ const fundUserAccount = async (req, res, next) => {
       });
     }
 
-    // Find user's wallet
     const wallet = await Wallet.findOne({ user: userId });
 
     if (!wallet) {
@@ -81,10 +54,7 @@ const fundUserAccount = async (req, res, next) => {
       });
     }
 
-    // Get current balance
     const currentBalance = wallet.getBalance(cryptocurrency);
-
-    // Update balance
     const newBalance = wallet.updateBalance(cryptocurrency, amount);
     await wallet.save();
 
@@ -97,10 +67,10 @@ const fundUserAccount = async (req, res, next) => {
           email: user.email,
         },
         funding: {
-          cryptocurrency: cryptocurrency,
-          amount: amount,
+          cryptocurrency,
+          amount,
           previousBalance: currentBalance,
-          newBalance: newBalance,
+          newBalance,
           totalValue: wallet.totalValue,
         },
         message: `Successfully funded ${user.firstName}'s ${cryptocurrency} account with $${amount}`,
@@ -112,7 +82,6 @@ const fundUserAccount = async (req, res, next) => {
   }
 };
 
-<<<<<<< HEAD
 // @desc    Deduct user account balance
 // @route   POST /api/admin/users/:userId/deduct
 // @access  Private/Admin
@@ -123,7 +92,6 @@ const deductUserAccount = async (req, res, next) => {
     const amount = Number(req.body.amount);
     const adminId = req.user.id;
 
-    // Validate amount
     if (!amount || amount <= 0) {
       return res.status(400).json({
         success: false,
@@ -138,7 +106,6 @@ const deductUserAccount = async (req, res, next) => {
       });
     }
 
-    // Find user
     const user = await User.findById(userId);
 
     if (!user) {
@@ -148,7 +115,6 @@ const deductUserAccount = async (req, res, next) => {
       });
     }
 
-    // Find user's wallet
     const wallet = await Wallet.findOne({ user: userId });
 
     if (!wallet) {
@@ -158,7 +124,6 @@ const deductUserAccount = async (req, res, next) => {
       });
     }
 
-    // Get current balance
     const currentBalance = wallet.getBalance(cryptocurrency);
 
     if (currentBalance < amount) {
@@ -168,7 +133,6 @@ const deductUserAccount = async (req, res, next) => {
       });
     }
 
-    // Deduct balance
     const newBalance = wallet.updateBalance(cryptocurrency, -amount);
     await wallet.save();
 
@@ -181,10 +145,10 @@ const deductUserAccount = async (req, res, next) => {
           email: user.email,
         },
         deduction: {
-          cryptocurrency: cryptocurrency,
-          amount: amount,
+          cryptocurrency,
+          amount,
           previousBalance: currentBalance,
-          newBalance: newBalance,
+          newBalance,
           totalValue: wallet.totalValue,
           deductedBy: adminId,
         },
@@ -200,8 +164,4 @@ const deductUserAccount = async (req, res, next) => {
 module.exports = {
   fundUserAccount,
   deductUserAccount,
-=======
-module.exports = {
-  fundUserAccount,
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 };

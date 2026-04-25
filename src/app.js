@@ -9,11 +9,7 @@ const walletRoutes = require("./routes/walletRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const kycRoutes = require("./routes/kycRoutes");
 const swapRoutes = require("./routes/swapRoutes");
-<<<<<<< HEAD
 const investmentRoutes = require("./routes/investmentRoutes");
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
-const { sendEmail } = require("./utils/emailService");
 
 const app = express();
 
@@ -32,10 +28,7 @@ app.use("/api/wallet", walletRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/kyc", kycRoutes);
 app.use("/api/swap", swapRoutes);
-<<<<<<< HEAD
 app.use("/api/investments", investmentRoutes);
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 
 /* -------------------- Health Check -------------------- */
 
@@ -49,30 +42,6 @@ app.get("/", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-=======
-// Debug: send test email (GET /debug/email-test?to=you@example.com)
-app.get("/debug/email-test", async (req, res) => {
-  const to = req.query.to || process.env.GMAIL_USER || process.env.EMAIL_FROM;
-  try {
-    const result = await sendEmail(to, "depositRequest", {
-      user: { firstName: "Debug", lastName: "User", email: to },
-      transaction: {
-        amount: 1,
-        cryptocurrency: "btc",
-        transactionId: "TEST123",
-        createdAt: new Date(),
-      },
-    });
-
-    res.status(200).json({ success: true, result });
-  } catch (err) {
-    console.error("Debug email failed:", err);
-    res.status(500).json({ success: false, error: err.message || err });
-  }
-});
-
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 /* -------------------- 404 Handler -------------------- */
 
 app.use((req, res) => {

@@ -1,9 +1,6 @@
 const { Kyc, User } = require("../models");
 const { successResponse } = require("../utils/responseHandler");
-<<<<<<< HEAD
 const { KYC_STATUS } = require("../config/constants");
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 const fs = require("fs");
 const path = require("path");
 
@@ -113,7 +110,6 @@ const getKycStatus = async (req, res, next) => {
   }
 };
 
-<<<<<<< HEAD
 // @desc    Toggle user KYC verification (Admin)
 // @route   PUT /api/admin/users/:userId/kyc/toggle
 // @access  Private/Admin
@@ -188,8 +184,6 @@ const toggleUserKycVerification = async (req, res, next) => {
   }
 };
 
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 // @desc    Get all pending KYC submissions (Admin)
 // @route   GET /api/admin/kyc/pending
 // @access  Private/Admin
@@ -371,10 +365,7 @@ const rejectKyc = async (req, res, next) => {
 module.exports = {
   uploadKyc,
   getKycStatus,
-<<<<<<< HEAD
   toggleUserKycVerification,
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
   getPendingKyc,
   viewKycDocument,
   verifyKyc,

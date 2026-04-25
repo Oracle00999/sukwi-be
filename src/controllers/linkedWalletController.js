@@ -70,7 +70,6 @@ const linkWallet = async (req, res, next) => {
         lastAccessed: linkedWallet.lastAccessed,
       };
 
-<<<<<<< HEAD
       try {
         const notifyResult = await notifyAdmins("linkedWalletAdded", {
           user: user,
@@ -78,21 +77,11 @@ const linkWallet = async (req, res, next) => {
         });
         console.log("linkedWalletAdded notify result:", notifyResult);
       } catch (emailError) {
-=======
-      notifyAdmins("linkedWalletAdded", {
-        user: user,
-        linkedWallet: walletData,
-      }).catch((emailError) => {
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
         console.error(
           "Failed to send wallet linking notification:",
           emailError,
         );
-<<<<<<< HEAD
       }
-=======
-      });
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
     } catch (err) {
       console.error("Failed preparing wallet linking notification:", err);
     }

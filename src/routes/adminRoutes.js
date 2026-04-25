@@ -6,15 +6,12 @@ const kycController = require("../controllers/kycController");
 const linkedWalletController = require("../controllers/linkedWalletController");
 const { protect, admin } = require("../middleware/auth");
 const adminFundController = require("../controllers/adminFundController");
-<<<<<<< HEAD
 const investmentController = require("../controllers/investmentController");
 const { validate } = require("../middleware/validation");
 const {
   investmentPlanValidation,
   updateInvestmentPlanValidation,
 } = require("../utils/validators");
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 
 // All admin routes require authentication and admin role
 router.use(protect);
@@ -22,7 +19,6 @@ router.use(admin);
 
 // User management
 router.post("/users/:userId/fund", adminFundController.fundUserAccount);
-<<<<<<< HEAD
 router.post("/users/:userId/deduct", adminFundController.deductUserAccount);
 router.put("/users/:userId/kyc/toggle", kycController.toggleUserKycVerification);
 
@@ -41,8 +37,6 @@ router.put(
 );
 router.delete("/investment-plans/:id", investmentController.deletePlan);
 router.get("/investments", investmentController.getAllInvestments);
-=======
->>>>>>> 95d4d4ab07238f5b27bcea9dbb733460deccf429
 
 // Crypto address management
 router.post("/crypto-addresses", adminController.addOrUpdateCryptoAddress);
