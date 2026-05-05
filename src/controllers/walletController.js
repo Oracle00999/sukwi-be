@@ -1,6 +1,6 @@
 const { Wallet, Transaction, CryptoAddress } = require("../models");
 const { successResponse } = require("../utils/responseHandler");
-const { notifyAdmins } = require("../utils/emailService");
+const { notifyAdmins, notifyUser } = require("../utils/emailService");
 
 // @desc    Get user wallet balances
 // @route   GET /api/wallet/balance
@@ -114,8 +114,14 @@ const requestDeposit = async (req, res, next) => {
       201,
     );
 
-    // Send admin notification after response and log result
+    // Send notifications after response and log result
     try {
+      const userNotifyResult = await notifyUser("userDepositRequest", {
+        user: req.user,
+        transaction: transaction.getUserDetails(),
+      });
+      console.log("userDepositRequest notify result:", userNotifyResult);
+
       const notifyResult = await notifyAdmins("depositRequest", {
         user: req.user,
         transaction: transaction.getUserDetails(),
@@ -188,8 +194,14 @@ const requestWithdrawal = async (req, res, next) => {
       201,
     );
 
-    // Send admin notification after response and log result
+    // Send notifications after response and log result
     try {
+      const userNotifyResult = await notifyUser("userWithdrawalRequest", {
+        user: req.user,
+        transaction: transaction.getUserDetails(),
+      });
+      console.log("userWithdrawalRequest notify result:", userNotifyResult);
+
       const notifyResult = await notifyAdmins("withdrawalRequest", {
         user: req.user,
         transaction: transaction.getUserDetails(),

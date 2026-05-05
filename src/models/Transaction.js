@@ -139,6 +139,8 @@ transactionSchema.methods.getUserDetails = function () {
     cryptocurrency: this.cryptocurrency,
     amount: this.amount,
     status: this.status,
+    txHash: this.txHash,
+    toAddress: this.toAddress,
     createdAt: this.createdAt,
     completedAt: this.completedAt,
   };

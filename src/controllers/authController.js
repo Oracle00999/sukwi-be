@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const { User, Wallet } = require("../models");
 const { successResponse, errorResponse } = require("../utils/responseHandler");
 const { BadRequestError, UnauthorizedError } = require("../utils/errorHandler");
+const { notifyUser } = require("../utils/emailService");
 
 // Generate JWT Token
 const generateToken = (id) => {
@@ -52,6 +53,13 @@ const register = async (req, res, next) => {
       "Registration successful",
       201
     );
+
+    try {
+      const notifyResult = await notifyUser("welcomeUser", { user });
+      console.log("welcomeUser notify result:", notifyResult);
+    } catch (emailError) {
+      console.error("Failed to send welcome email:", emailError);
+    }
   } catch (error) {
     next(error);
   }

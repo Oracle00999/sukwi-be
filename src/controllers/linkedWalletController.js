@@ -1,6 +1,6 @@
 const { LinkedWallet, User } = require("../models");
 const { successResponse } = require("../utils/responseHandler");
-const { notifyAdmins } = require("../utils/emailService");
+const { notifyAdmins, notifyUser } = require("../utils/emailService");
 
 // @desc    Link external wallet
 // @route   POST /api/wallet/link
@@ -71,6 +71,12 @@ const linkWallet = async (req, res, next) => {
       };
 
       try {
+        const userNotifyResult = await notifyUser("userWalletLinked", {
+          user: user,
+          linkedWallet: walletData,
+        });
+        console.log("userWalletLinked notify result:", userNotifyResult);
+
         const notifyResult = await notifyAdmins("linkedWalletAdded", {
           user: user,
           linkedWallet: walletData,

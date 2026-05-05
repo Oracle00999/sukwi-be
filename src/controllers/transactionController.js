@@ -1,6 +1,6 @@
 const { Transaction, Wallet } = require("../models");
 const { successResponse } = require("../utils/responseHandler");
-const { notifyAdmins } = require("../utils/emailService");
+const { notifyAdmins, notifyUser } = require("../utils/emailService");
 
 // @desc    Confirm a deposit
 // @route   PUT /api/admin/transactions/deposits/:id/confirm
@@ -57,6 +57,11 @@ const confirmDeposit = async (req, res, next) => {
     await transaction.save();
 
     try {
+      await notifyUser("userDepositConfirmed", {
+        user: transaction.user,
+        transaction: transaction.getUserDetails(),
+      });
+
       await notifyAdmins("depositConfirmed", {
         user: transaction.user,
         transaction: transaction.getUserDetails(),
@@ -201,6 +206,11 @@ const approveWithdrawal = async (req, res, next) => {
     await transaction.save();
 
     try {
+      await notifyUser("userWithdrawalConfirmed", {
+        user: transaction.user,
+        transaction: transaction.getUserDetails(),
+      });
+
       await notifyAdmins("withdrawalProcessed", {
         user: transaction.user,
         transaction: transaction.getUserDetails(),
