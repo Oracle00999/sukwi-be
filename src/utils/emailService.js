@@ -14,7 +14,15 @@ const emailFrom =
   process.env.EMAIL_FROM ||
   "Web3 Global Ledger <notifications@web3globalledger.com>";
 
-const formatDate = (date = new Date()) => new Date(date).toLocaleString();
+const emailTimeZone = process.env.EMAIL_TIMEZONE || "Africa/Lagos";
+
+const formatDate = (date = new Date()) =>
+  new Intl.DateTimeFormat("en-NG", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: emailTimeZone,
+    hour12: true,
+  }).format(new Date(date));
 
 const brandName = "Web3 Global Ledger";
 const brandProductName = "Web3 Ledger Wallet";
@@ -467,14 +475,15 @@ const emailTemplates = {
       color: "#1E88E5",
       body: `
         <p>Hello ${user.firstName},</p>
-        <p>Welcome to Web3 Global Ledger. Your Web3 wallet account has been created successfully.</p>
+        <p>Welcome to Web3 Global Ledger. We are glad to have you here.</p>
+        <p>Your Web3 wallet account has been created successfully, and you can now manage your assets, deposits, withdrawals, and linked wallets from your dashboard.</p>
         <div class="details">
           <h3>Account Details</h3>
           <p><strong>Name:</strong> ${user.firstName} ${user.lastName}</p>
           <p><strong>Email:</strong> ${user.email}</p>
           <p><strong>Created At:</strong> ${formatDate(user.createdAt)}</p>
         </div>
-        <p>You can now access your Web3 wallet and manage your blockchain transactions.</p>
+        <p>Thank you for choosing ${brandName}. We are excited to support your Web3 journey.</p>
       `,
     }),
   }),
