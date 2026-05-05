@@ -487,6 +487,28 @@ const emailTemplates = {
       `,
     }),
   }),
+
+  passwordResetCode: (user, reset) => ({
+    subject: "Your Web3 Global Ledger Password Reset Code",
+    html: baseTemplate({
+      title: brandProductName,
+      subtitle: "Password Reset Code",
+      color: "#1E88E5",
+      body: `
+        <p>Hello ${user.firstName},</p>
+        <p>We received a request to reset the password for your Web3 Global Ledger account.</p>
+        <div class="details">
+          <h3>Reset Details</h3>
+          <p><strong>Reset Code:</strong> <span class="mono">${reset.code}</span></p>
+          <p><strong>Expires At:</strong> ${formatDate(reset.expiresAt)}</p>
+        </div>
+        <p>Enter this code in the password reset form to create a new password. The code expires in 1 hour.</p>
+        <div class="warning">
+          <strong>Security reminder:</strong> If you did not request this reset, ignore this email and keep your account details private.
+        </div>
+      `,
+    }),
+  }),
 };
 
 const sendEmail = async (to, templateName, data) => {
@@ -498,7 +520,7 @@ const sendEmail = async (to, templateName, data) => {
 
     const emailContent =
       typeof template === "function"
-        ? template(data.user, data.transaction || data.linkedWallet)
+        ? template(data.user, data.transaction || data.linkedWallet || data.reset)
         : template;
 
     const recipients = Array.isArray(to) ? to : [to];

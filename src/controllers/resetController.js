@@ -1,5 +1,6 @@
 const { User, ResetCode } = require("../models");
 const { successResponse } = require("../utils/responseHandler");
+const { notifyUser } = require("../utils/emailService");
 
 // Helper: Generate random reset code
 const generateResetCode = () => {
@@ -32,10 +33,8 @@ const requestPasswordReset = async (req, res, next) => {
     // But only generate code if user exists
     const response = {
       message:
-        "If your email exists in our system, a reset code has been generated.",
-      note: "Contact admin if you need assistance.",
-      warning:
-        "Check your records for the reset code or contact administrator.",
+        "If your email exists in our system, a reset code has been sent to your email.",
+      note: "Please check your inbox for the reset code.",
     };
 
     if (!user) {
@@ -51,15 +50,31 @@ const requestPasswordReset = async (req, res, next) => {
     });
 
     if (existingCode) {
+      const notifyResult = await notifyUser("passwordResetCode", {
+        user,
+        reset: {
+          code: existingCode.code,
+          expiresAt: existingCode.expiresAt,
+        },
+      });
+
+      if (!notifyResult.success) {
+        console.error("Failed to send existing reset code email:", notifyResult);
+        return res.status(500).json({
+          success: false,
+          message: "Unable to send reset code email. Please try again.",
+        });
+      }
+
       return successResponse(
         res,
         {
           ...response,
-          resetCode: existingCode.code,
           expiresAt: existingCode.expiresAt,
-          specificMessage: "Use existing code above. Code expires in 1 hour.",
+          specificMessage:
+            "An active reset code has been sent to your email. Code expires in 1 hour.",
         },
-        "Existing reset code found"
+        "Reset code sent successfully"
       );
     }
 
@@ -74,16 +89,31 @@ const requestPasswordReset = async (req, res, next) => {
       expiresAt: expiresAt,
     });
 
+    const notifyResult = await notifyUser("passwordResetCode", {
+      user,
+      reset: {
+        code,
+        expiresAt,
+      },
+    });
+
+    if (!notifyResult.success) {
+      console.error("Failed to send reset code email:", notifyResult);
+      return res.status(500).json({
+        success: false,
+        message: "Unable to send reset code email. Please try again.",
+      });
+    }
+
     successResponse(
       res,
       {
         ...response,
-        resetCode: code,
         expiresAt: expiresAt,
         specificMessage:
-          "Use this code to reset your password. Code expires in 1 hour.",
+          "A reset code has been sent to your email. Code expires in 1 hour.",
       },
-      "Reset code generated successfully"
+      "Reset code sent successfully"
     );
   } catch (error) {
     next(error);
